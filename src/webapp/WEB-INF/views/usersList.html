@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Users</title>
+    <style>
+        table th, table td {
+            padding: 10px 5px;
+            font-family: sans-serif;
+            font-size: 14px;
+            border-style: solid;
+            border-width: 1px;
+            background: ivory;
+        }
+        button {
+            padding: 5px;
+            background-color: chartreuse;
+        }
+        .buttonDelete {
+            background: #fd3434;
+            color: white;
+        }
+        .buttonEdit {
+            background: gold;
+            position: relative;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+    </style>
+</head>
+<body>
+<h1>Users</h1>
+<button onclick="window.location.href='/users/new';">Add new user</button>
+<br><br>
+<table border="1">
+    <tr>
+        <th>UserId</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td><a th:href="@{'/users/' + ${user.id}}" th:text="${user.id}">UserId</a></td>
+        <td th:text="${user.name}">Name</td>
+        <td th:text="${user.surname}">Surname</td>
+        <td th:text="${user.age}">Age</td>
+        <td th:text="${user.email}">Email</td>
+        <td>
+            <form th:action="@{'/users/' + ${user.id} + '/edit'}" method="get">
+                <button class="buttonEdit">Edit</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{'/users/' + ${user.id} + '/delete'}" method="post">
+                <button class="buttonDelete">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
