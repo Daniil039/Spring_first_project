@@ -26,7 +26,7 @@ public class UserController {
     }
 
     // Получение одного пользователя
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public String getUserById(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userService.findById(id));
         return "user";
@@ -47,21 +47,22 @@ public class UserController {
     }
 
     // Страница для редактирования пользователя
-    @GetMapping("/{id}/edit")
+    @GetMapping("/user/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("user", userService.findById(id));
         return "editUser";
     }
 
     // Обновление пользователя
-    @PostMapping("/{id}")
-    public String update(@ModelAttribute("user") User user) {
+    @PostMapping("/user/{id}")
+    public String update(@PathVariable("id") int id, @ModelAttribute("user") User user) {
+        user.setId(id);
         userService.update(user);
         return "redirect:/users";
     }
 
     // Удаление пользователя
-    @PostMapping("/{id}/delete")
+    @PostMapping("/user/{id}/delete")
     public String delete(@PathVariable("id") int id) {
         userService.delete(id);
         return "redirect:/users";
